@@ -150,13 +150,22 @@ that use the API provided by core.
 			}
 			
 			/* Remove any previous bindings, and rebind key events */
+			/** Added cases for up and down keys **/
 			$d.unbind('keydown.deck').bind('keydown.deck', function(e) {
 				switch (e.which) {
-					case options.keys.next:
+					case options.keys.next.right:
 						methods.next();
 						e.preventDefault();
 						break;
-					case options.keys.previous:
+					case options.keys.next.down:
+						methods.next();
+						e.preventDefault();
+						break;
+					case options.keys.previous.left:
+						methods.prev();
+						e.preventDefault();
+						break;
+					case options.keys.previous.up:
 						methods.prev();
 						e.preventDefault();
 						break;
@@ -331,10 +340,10 @@ that use the API provided by core.
 		deck, as with the onPrefix option, or with extensions such as deck.goto
 		and deck.menu.
 		
-	options.keys.next
+	options.keys.next.right || options.keys.next.down
 		The numeric keycode used to go to the next slide.
 		
-	options.keys.previous
+	options.keys.previous || options.keys.previous.up
 		The numeric keycode used to go to the previous slide.
 	*/
 	$[deck].defaults = {
@@ -353,8 +362,14 @@ that use the API provided by core.
 		},
 		
 		keys: {
-			next: 39, // right arrow key
-			previous: 37 // left arrow key
+			next: {
+				right: 39, // right arrow key
+				down: 40 // down arrow key (added by jaredwilli)
+			},			
+			previous: {
+				left: 37, // left arrow key
+				up: 38 // up arrow key (added by jaredwilli)
+			}
 		}
 	};
 	
